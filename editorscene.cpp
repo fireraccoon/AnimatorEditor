@@ -10,6 +10,7 @@ EditorScene::EditorScene(QObject *parent)
     mStateColor = Qt::white;
     mLineColor = Qt::black;
 
+    setBackgroundBrush(Qt::gray);
 }
 
 void EditorScene::setMode(EditorScene::Mode mode){
@@ -26,4 +27,5 @@ void EditorScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
 
 void EditorScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
      qDebug("RELEASE");
+     addItem(new StateItem(50,50,200,50));
 }
