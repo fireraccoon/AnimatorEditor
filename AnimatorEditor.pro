@@ -13,11 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    editorscene.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    editorscene.h
 
 FORMS    += mainwindow.ui
 
-RESOURCES  += \
-            qdarkstyle\style.qrc

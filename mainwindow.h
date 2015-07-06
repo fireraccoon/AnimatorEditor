@@ -1,10 +1,17 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
+
+
+#include "editorscene.h"
+
 #include <QMainWindow>
 
+
+
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow{
@@ -23,7 +30,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-
+    EditorScene *scene;
 
 
 };
