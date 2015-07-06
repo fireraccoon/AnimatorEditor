@@ -34,7 +34,7 @@ signals:
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);       //Called only when the mouse isPressed
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 

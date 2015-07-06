@@ -16,17 +16,14 @@ void EditorScene::setMode(EditorScene::Mode mode){
     mMode = mode;
 }
 
-void EditorScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-
+void EditorScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
+    qDebug("PRESS");
 }
 
-void EditorScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-
+void EditorScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
+     qDebug("MOVE");
 }
 
-void EditorScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-
+void EditorScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
+     qDebug("RELEASE");
 }

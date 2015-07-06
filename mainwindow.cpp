@@ -6,15 +6,19 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
 
 
-    //NAME
-    qApp->setApplicationDisplayName("Animator Editor (GoatEngine)");
-
-     ui->setupUi(this);
+    ui->setupUi(this);
 
     //SetUp Editor Scene
     scene = new EditorScene(this);
     scene->setSceneRect(QRectF(0, 0, 500, 500));
     ui->graphicsView->setScene(scene);
+
+    //NAME
+    setWindowTitle("Animator Editor (GoatEngine)");
+    setUnifiedTitleAndToolBarOnMac(true);
+
+
+
 
 }
 
