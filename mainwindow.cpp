@@ -12,8 +12,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
      ui->setupUi(this);
 
     //SetUp Editor Scene
-    scene = new EditorScene();
-
+    scene = new EditorScene(this);
+    scene->setSceneRect(QRectF(0, 0, 500, 500));
+    ui->graphicsView->setScene(scene);
 
 }
 

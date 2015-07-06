@@ -1,6 +1,8 @@
 #ifndef EDITORSCENE_H
 #define EDITORSCENE_H
 
+#include "stateitem.h"
+
 #include <QGraphicsScene>
 
 
@@ -18,17 +20,37 @@ public:
         MoveState               //When moving a State
     };
 
-    EditorScene();
+    EditorScene(QObject *parent);
+
+public slots:
+    void setMode(Mode mode); //Changes the mode
+
+
+
+signals:
+    void stateInserted(StateItem *state);    // Triggered when a state is added to the scene
+    void itemSelected(QGraphicsItem *item);  // Triggered when an Item is selected on the scene
+
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
+
+
 
 private:
-    Mode m_mode;                // The current mode of the editor
+
+
+
+    Mode mMode;                // The current mode of the editor
 
     //TODO add a Context Menu
 
-
-    QColor m_textColor;
-    QColor m_stateColor;
-    QColor m_lineColor;
+    QColor mTextColor;
+    QColor mStateColor;
+    QColor mLineColor;
 };
 
 #endif // EDITORSCENE_H

@@ -1,14 +1,32 @@
 #include "editorscene.h"
 
-EditorScene::EditorScene(){
 
-    m_mode = Mode::MoveState;
+EditorScene::EditorScene(QObject *parent)
+    : QGraphicsScene(parent){
 
+    mMode = MoveState;
 
-    m_textColor = Qt::black;
-    m_stateColor = Qt::white;
-    m_lineColor = Qt::black;
-
+    mTextColor = Qt::black;
+    mStateColor = Qt::white;
+    mLineColor = Qt::black;
 
 }
 
+void EditorScene::setMode(EditorScene::Mode mode){
+    mMode = mode;
+}
+
+void EditorScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+
+}
+
+void EditorScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+
+}
+
+void EditorScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+
+}
