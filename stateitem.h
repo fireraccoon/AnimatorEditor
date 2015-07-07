@@ -1,7 +1,9 @@
 #ifndef EDITORITEM_H
 #define EDITORITEM_H
 
-#include <QGraphicsPolygonItem>
+#include <QGraphicsItem>
+#include <QPainter>
+
 
 
 /**
@@ -11,9 +13,24 @@
 class StateItem : public QGraphicsRectItem{
 
 public:
-    StateItem(int x1, int y1, int x2, int y2);
+    StateItem(int x, int y, bool isEnterState = false);
+
+    QRectF getBoundingRect() const;
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
 
+private:
+    QString name;   //Name of the state
+
+
+    bool mIsSelected;  //Wether the current item is selected
+    bool mIsEnterState; //Whether the state is the enter state
 
 };
 

@@ -3,7 +3,9 @@
 
 #include "stateitem.h"
 
+
 #include <QGraphicsScene>
+#include <QGraphicsSceneContextMenuEvent>
 
 
 
@@ -37,7 +39,7 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);       //Called only when the mouse isPressed
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 
 private:
