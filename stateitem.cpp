@@ -1,10 +1,11 @@
 #include "stateitem.h"
 
+#include <QMenu>
 #include <QPainter>
 #include <QPen>
 
 StateItem::StateItem(int x, int y, bool isEnterState)
-    : QGraphicsRectItem(x, y, x+200, y+30){
+    : QGraphicsRectItem(x, y, 200, 50){
 
     mIsSelected = false;
     mIsEnterState = isEnterState;
@@ -24,7 +25,7 @@ void StateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
          QPen pen(Qt::red, 3);
          painter->setPen(pen);
     }else{
-         QPen pen(Qt::black, 3);
+         QPen pen(Qt::black, 0);
          painter->setPen(pen);
     }
 
@@ -40,14 +41,25 @@ void StateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 }
 
 void StateItem::mousePressEvent(QGraphicsSceneMouseEvent *event){
+    QGraphicsRectItem::mousePressEvent(event);
     mIsSelected = true;
 }
 
 void StateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
+    QGraphicsRectItem::mouseReleaseEvent(event);
     mIsSelected = false;
 }
 
 void StateItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event){
+     QGraphicsRectItem::mouseDoubleClickEvent(event);
 
+}
+
+void StateItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event){
+    QMenu menu(event->widget());
+    menu.addAction("Mark Enter");
+    menu.addAction("Create transition");
+    menu.addAction("Delete State");
+    menu.exec(event->screenPos());
 }
 

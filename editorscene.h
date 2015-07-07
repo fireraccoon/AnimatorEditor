@@ -24,10 +24,12 @@ public:
 
     EditorScene(QObject *parent);
 
+
+
+    void addState(QPointF pos);
+
 public slots:
     void setMode(Mode mode); //Changes the mode
-
-
 
 signals:
     void stateInserted(StateItem *state);    // Triggered when a state is added to the scene
@@ -42,6 +44,8 @@ protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 
+
+
 private:
 
 
@@ -53,6 +57,13 @@ private:
     QColor mTextColor;
     QColor mStateColor;
     QColor mLineColor;
+
+
+
+
+
+
+
 };
 
 #endif // EDITORSCENE_H

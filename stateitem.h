@@ -2,6 +2,7 @@
 #define EDITORITEM_H
 
 #include <QGraphicsItem>
+#include <QGraphicsSceneContextMenuEvent>
 #include <QPainter>
 
 
@@ -24,7 +25,7 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
-
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 private:
     QString name;   //Name of the state
 

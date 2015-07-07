@@ -1,7 +1,8 @@
 #include "editorscene.h"
 
 #include <QMenu>
-
+#include <QSignalMapper>
+#include <QDebug>
 
 EditorScene::EditorScene(QObject *parent)
     : QGraphicsScene(parent){
@@ -14,12 +15,21 @@ EditorScene::EditorScene(QObject *parent)
 
     setBackgroundBrush(Qt::gray);
 
-    addItem(new StateItem(50,50));
+
+
 }
 
 void EditorScene::setMode(EditorScene::Mode mode){
     mMode = mode;
 }
+
+void EditorScene::addState(QPointF pos){
+    StateItem *item = new StateItem(pos.x(),pos.y());
+    qDebug() << "created";
+    addItem(item);
+    qDebug() << "added";
+}
+
 
 void EditorScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
      QGraphicsScene::mousePressEvent(event);
@@ -35,8 +45,19 @@ void EditorScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 }
 
 void EditorScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event){
+
+    QString addStateStr = "Add State";
+
     QMenu menu(event->widget());
-    menu.addAction("Add State");
-    menu.addAction("Create transition");
-    menu.exec(event->screenPos());
+    menu.addAction(addStateStr);
+    QAction *a = menu.exec(event->screenPos());
+    if(a != NULL){
+        if(a->text() == addStateStr){
+            addState(event->scenePos());
+        }
+
+    }
+
+
+
 }
