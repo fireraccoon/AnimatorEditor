@@ -21,5 +21,9 @@ HEADERS  += mainwindow.h \
     editorscene.h \
     stateitem.h
 
-FORMS    += mainwindow.ui
+RESOURCES = qdarkstyle/style.qrc \
+    res/res.qrc
+
+FORMS    += mainwindow.ui \
+    newparameterdialog.ui
 

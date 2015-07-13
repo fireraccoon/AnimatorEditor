@@ -3,7 +3,6 @@
 
 
 
-
 #include "editorscene.h"
 
 #include <QMainWindow>
@@ -27,6 +26,8 @@ private:
 
 private slots:
     void on_actionExit_triggered();
+
+    void on_btnAddParameter_clicked();
 
 private:
     Ui::MainWindow *ui;

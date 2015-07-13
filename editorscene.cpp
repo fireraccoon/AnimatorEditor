@@ -9,12 +9,7 @@ EditorScene::EditorScene(QObject *parent)
 
     mMode = MoveState;
 
-    mTextColor = Qt::black;
-    mStateColor = Qt::white;
-    mLineColor = Qt::black;
-
-    setBackgroundBrush(Qt::gray);
-
+    setBackgroundBrush(QPixmap(":/res/background.jpg"));
 
 
 }
@@ -25,9 +20,7 @@ void EditorScene::setMode(EditorScene::Mode mode){
 
 void EditorScene::addState(QPointF pos){
     StateItem *item = new StateItem(pos.x(),pos.y());
-    qDebug() << "created";
     addItem(item);
-    qDebug() << "added";
 }
 
 
@@ -46,18 +39,26 @@ void EditorScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 
 void EditorScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event){
 
-    QString addStateStr = "Add State";
+        QGraphicsScene::contextMenuEvent(event);
 
-    QMenu menu(event->widget());
-    menu.addAction(addStateStr);
-    QAction *a = menu.exec(event->screenPos());
-    if(a != NULL){
-        if(a->text() == addStateStr){
-            addState(event->scenePos());
+        if(!event->isAccepted()){
+            QString addStateStr = "Add State";
+            QMenu menu(event->widget());
+            menu.addAction(addStateStr);
+            QAction *a = menu.exec(event->screenPos());
+            if(a != NULL){
+                if(a->text() == addStateStr){
+                    addState(event->scenePos());
+                }
+
+            }
         }
 
-    }
+
+
 
 
 
 }
+
+

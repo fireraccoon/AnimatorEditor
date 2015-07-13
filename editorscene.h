@@ -9,9 +9,11 @@
 
 
 
-class EditorScene : public QGraphicsScene
-{
+class EditorScene : public QGraphicsScene{
+
     Q_OBJECT
+
+
 public:
     /**
      * The possible modes of the editor
@@ -25,7 +27,11 @@ public:
     EditorScene(QObject *parent);
 
 
-
+    /**
+     * @brief addState
+     * Adds a new Visual StateItem
+     * @param pos
+     */
     void addState(QPointF pos);
 
 public slots:
@@ -34,6 +40,8 @@ public slots:
 signals:
     void stateInserted(StateItem *state);    // Triggered when a state is added to the scene
     void itemSelected(QGraphicsItem *item);  // Triggered when an Item is selected on the scene
+
+
 
 
 protected:
@@ -46,20 +54,12 @@ protected:
 
 
 
+
+
 private:
 
 
-
-    Mode mMode;                // The current mode of the editor
-
-    //TODO add a Context Menu
-
-    QColor mTextColor;
-    QColor mStateColor;
-    QColor mLineColor;
-
-
-
+    Mode mMode;   // The current mode of the editor
 
 
 

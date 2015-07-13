@@ -24,19 +24,51 @@
        <bool>false</bool>
       </property>
       <widget class="QGroupBox" name="groupBoxParameters">
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="title">
         <string>Parameters</string>
        </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QTextEdit" name="searchBarParameter">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>25</height>
-           </size>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLineEdit" name="searchParameter"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnAddParameter">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>+</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnDelParameter">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>-</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QListView" name="listView"/>

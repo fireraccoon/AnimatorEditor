@@ -3,6 +3,8 @@
 
 
 
+
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
 
 
@@ -40,5 +42,9 @@ void MainWindow::exitApp(){
     // on No exit
     // on cancel return
     qApp->exit(0);
+
+}
+
+void MainWindow::on_btnAddParameter_clicked(){
 
 }
