@@ -1,6 +1,7 @@
 #ifndef EDITORSCENE_H
 #define EDITORSCENE_H
 
+#include "animator.h"
 #include "stateitem.h"
 
 
@@ -33,6 +34,16 @@ public:
      * @param pos
      */
     void addState(QPointF pos);
+
+
+    /**
+     * Displays the animator on the scene
+     * @brief displayAnimator
+     * @param animator
+     */
+    void displayAnimator(Animator &animator);
+
+
 
 public slots:
     void setMode(Mode mode); //Changes the mode

@@ -25,7 +25,6 @@ StateItem::StateItem(int x, int y, bool isEnterState, QGraphicsItem *parent)
 }
 
 
-
 void StateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
 
     if(mIsSelected){
@@ -41,12 +40,12 @@ void StateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         painter->setBrush(QColor(0, 0xFF, 0, 0x80));
     else
         painter->setBrush(QColor(0, 0, 0, 0x80));
-    QRect rect = option->rect;
-    int margin = 50;
-    rect = rect.marginsAdded(QMargins(margin, margin, margin, margin));
-    painter->drawRect(rect);
 
+    int margin = 10;
+    //painter->drawRect(option->rect.marginsAdded(QMargins(margin, margin, margin, margin)));
+    painter->drawRect(option->rect);
     QGraphicsTextItem::paint(painter, option, widget);
+
 
 }
 
@@ -120,7 +119,7 @@ QVariant StateItem::itemChange(QGraphicsItem::GraphicsItemChange change, const Q
     cursor.clearSelection();
     this->setTextCursor(cursor);
 
-
+    update();
     return value;
 }
 

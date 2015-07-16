@@ -1,9 +1,34 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QDebug>
+#include <animator.h>
 
 int main(int argc, char *argv[])
 {
+
+
+    //MACHINE
+    Animator anim;
+
+    anim.addParameter("speed", Parameter(ParameterType::Integer));
+    anim.addParameter("isGrounded", Parameter(ParameterType::Boolean));
+
+    State idle("IDLE", "Idle");
+    State running("RUNNING", "running");
+    running.addTransition(Transition(idle.getId(),running.getId(),new Condition("speed", ConditionOperand::EQUALS, "10")));
+
+
+    anim.addState(idle);
+    anim.addState(running);
+
+
+
+
+
+
+
+
+    anim.saveToXml("../Choko.xml");
 
 
     QApplication a(argc, argv);
@@ -12,16 +37,7 @@ int main(int argc, char *argv[])
     w.show();
 
 
-    QFile f(":/qdarkstyle/style.qss");
-    if (!f.exists()){
-        qDebug("Unable to set stylesheet, file not found\n");
-    }
-    else
-    {
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&f);
-        qApp->setStyleSheet(ts.readAll());
-    }
+
 
 
     return a.exec();
