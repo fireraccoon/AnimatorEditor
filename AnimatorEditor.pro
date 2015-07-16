@@ -15,23 +15,21 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     editorscene.cpp \
-    stateitem.cpp \
     newparamdialog.cpp \
     animator.cpp \
-    state.cpp \
     parameter.cpp \
-    transition.cpp \
-    condition.cpp
+    condition.cpp \
+    graphicstransition.cpp \
+    graphicsstateitem.cpp
 
 HEADERS  += mainwindow.h \
     editorscene.h \
-    stateitem.h \
     newparamdialog.h \
     animator.h \
-    state.h \
     parameter.h \
-    transition.h \
-    condition.h
+    condition.h \
+    graphicstransition.h \
+    graphicsstateitem.h
 
 RESOURCES = qdarkstyle/style.qrc \
     res/res.qrc

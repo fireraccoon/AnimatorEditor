@@ -11,10 +11,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     //SetUp Editor Scene
-    scene = new EditorScene(this);
-    scene->setSceneRect(QRectF(-5000, -500, 500, 500));
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->setRenderHints( QPainter::Antialiasing );
+    setupEditor();
 
     //NAME
     setWindowTitle("Animator Editor (GoatEngine)");
@@ -39,6 +36,7 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
+
 void MainWindow::on_actionExit_triggered(){
     exitApp();
 }
@@ -55,6 +53,13 @@ void MainWindow::exitApp(){
 
 }
 
+void MainWindow::setupEditor(){
+    scene = new EditorScene(this);
+    scene->setSceneRect(QRectF(-5000, -500, 500, 500));
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setRenderHints( QPainter::Antialiasing );
+}
+
 void MainWindow::on_btnAddParameter_clicked(){
 
     NewParamDialog *d = new NewParamDialog(this);
@@ -62,3 +67,51 @@ void MainWindow::on_btnAddParameter_clicked(){
 
 
 }
+
+
+
+
+
+
+
+
+void MainWindow::deleteSelectedItem(){
+
+}
+
+
+
+
+
+void MainWindow::stateInserted(GraphicsStateItem *item)
+{
+
+}
+
+void MainWindow::sceneScaleChanged(const QString &scale)
+{
+
+}
+
+void MainWindow::itemSelected(QGraphicsItem *item)
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -19,7 +19,10 @@ void EditorScene::setMode(EditorScene::Mode mode){
 }
 
 void EditorScene::addState(QPointF pos){
-    StateItem *item = new StateItem(pos.x(),pos.y());
+
+
+    QMenu menu =
+    GraphicsStateItem *item = new GraphicsStateItem(pos.x(),pos.y(), menu);
     addItem(item);
 }
 
@@ -29,7 +32,19 @@ void EditorScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 }
 
 void EditorScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
-    QGraphicsScene::mouseMoveEvent(event);
+
+    //If we are in the add transition mode the transition follows the mouse
+    if(mMode == Mode::InsertTransition){
+        //QLineF newLine(line->line().p1(), event->scenePos());
+        //line->setLine(newLine);
+    }else if(mMode == Mode::MoveState){
+        QGraphicsScene::mouseMoveEvent(event);
+    }
+
+
+
+
+
 }
 
 void EditorScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){

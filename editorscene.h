@@ -2,7 +2,7 @@
 #define EDITORSCENE_H
 
 #include "animator.h"
-#include "stateitem.h"
+#include "graphicsstateitem.h"
 
 
 #include <QGraphicsScene>
@@ -49,7 +49,8 @@ public slots:
     void setMode(Mode mode); //Changes the mode
 
 signals:
-    void stateInserted(StateItem *state);    // Triggered when a state is added to the scene
+    void stateInserted(GraphicsStateItem *state);    // Triggered when a state is added to the scene
+    //void transitionInserted(Transition)
     void itemSelected(QGraphicsItem *item);  // Triggered when an Item is selected on the scene
 
 

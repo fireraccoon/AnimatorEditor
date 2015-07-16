@@ -21,13 +21,64 @@ public:
     ~MainWindow();
 
 
-private:
-    void exitApp(); //Exits the application
+
+
 
 private slots:
-    void on_actionExit_triggered();
 
+
+    //Editor Response Slot
+    ///
+    /// \brief Triggered when the selected item is deleted
+    ///
+    void deleteSelectedItem();
+
+    ///
+    /// \brief Triggered when a state is added
+    /// \param item
+    ///
+    void stateInserted(GraphicsStateItem *item);
+
+
+    //void transitionInserted(TransitionGraphicsItem *item) // TODO
+
+
+    ///
+    /// \brief Triggered when an item is selected
+    /// \param scale the new desired scale
+    ///
+    void sceneScaleChanged(const QString &scale);
+
+
+    ///
+    /// \brief Triggered when an item is selected
+    /// \param item
+    ///
+    void itemSelected(QGraphicsItem *item);
+
+
+
+
+
+
+    void on_actionExit_triggered();
     void on_btnAddParameter_clicked();
+
+
+
+private:
+    ///
+    /// \brief Exits the application
+    ///
+    void exitApp();
+
+
+    ///
+    /// \brief initialises the editor
+    ///
+    void setupEditor();
+
+
 
 private:
     Ui::MainWindow *ui;
