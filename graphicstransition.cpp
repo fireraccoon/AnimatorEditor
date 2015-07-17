@@ -73,6 +73,7 @@ void GraphicsTransition::writeXml(QXmlStreamWriter &writer){
 
 void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
 
+    //If the collide no need to draw an arrow
     if (mCurrentState->collidesWithItem(mNextState))
        return;
 
@@ -85,12 +86,12 @@ void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     QLineF centerLine(mCurrentState->getCenterPoint(), mNextState->getCenterPoint());
     QPolygonF endPolygon = mNextState->boundingRect();
-    QPointF p1 = endPolygon.first() + mNextState->getCenterPoint();
+    QPointF p1 = endPolygon.first() + mNextState->pos();
     QPointF p2;
     QPointF intersectPoint;
     QLineF polyLine;
     for (int i = 1; i < endPolygon.count(); ++i) {
-    p2 = endPolygon.at(i) + mNextState->getCenterPoint();
+    p2 = endPolygon.at(i) + mNextState->pos();
     polyLine = QLineF(p1, p2);
     QLineF::IntersectType intersectType =
         polyLine.intersect(centerLine, &intersectPoint);
