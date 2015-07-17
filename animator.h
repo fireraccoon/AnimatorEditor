@@ -5,7 +5,7 @@
 #include "map"
 #include "QString"
 
-#include "state.h"
+#include "graphicsstateitem.h"
 #include "parameter.h"
 
 #include <QHash>
@@ -29,7 +29,7 @@ public:
      * @param s
      * @return
      */
-    void addState(State &s);
+    void addState(GraphicsStateItem &s);
 
 
     /**
@@ -41,7 +41,6 @@ public:
 
 
 private:
-    std::vector<State> states;
     QHash<QString, Parameter> parameters;
 
 };

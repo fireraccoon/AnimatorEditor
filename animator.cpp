@@ -12,8 +12,8 @@ void Animator::addParameter(QString name, Parameter &p){
     this->parameters.insert(name, p);
 }
 
-void Animator::addState(State &s){
-    this->states.push_back(s);
+void Animator::addState(GraphicsStateItem &s){
+    //this->states.push_back(s);
 }
 
 void Animator::saveToXml(const QString &filename){
@@ -40,12 +40,12 @@ void Animator::saveToXml(const QString &filename){
     //<parameters/>
 
     //States
-    xmlWriter.writeStartElement("states");
+   /* xmlWriter.writeStartElement("states");
     for(std::vector<State>::iterator it = states.begin(); it != states.end(); ++it){
         it->writeXml(xmlWriter);
     }
 
-    xmlWriter.writeEndElement();
+    xmlWriter.writeEndElement();*/
     //<states/>
 
 

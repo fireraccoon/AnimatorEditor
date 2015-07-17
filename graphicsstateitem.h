@@ -23,7 +23,7 @@ class GraphicsStateItem : public QGraphicsTextItem{
 Q_OBJECT
 
 public:
-    GraphicsStateItem(int x, int y, QMenu *contextMenu, bool isEnterState = false, QGraphicsItem *parent=0);
+    GraphicsStateItem(int x, int y, bool isEnterState = false, QGraphicsItem *parent=0);
 
     QRectF getBoundingRect() const;
 
@@ -60,6 +60,33 @@ signals:
     void lostFocus(GraphicsStateItem *item);            //Triggered when a state items looses the focus
     void selectedChange(QGraphicsItem *item);
 
+    ///
+    /// \brief Triggered when the users wants to delete the current state
+    /// \param item
+    ///
+    void deleteRequest(GraphicsStateItem *item);
+
+    ///
+    /// \brief Triggered when the item is selected
+    /// \param item
+    ///
+    void itemSelected(QGraphicsItem *item);
+
+
+    ///
+    /// \brief When a state is marked or unmarked as enter state
+    /// \param item
+    /// \param isEnterState the desired state
+    ///
+    void stateMarked(GraphicsStateItem *item, bool isEnterState);
+
+    ///
+    /// \brief The user requested to add a new transition starting from the current state
+    /// \param item
+    ///
+    void transitionInsertionRequest(GraphicsStateItem *item);
+
+
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -80,16 +107,39 @@ protected:
 
 
 
+private slots:
+
+    void createContextMenu();
+
+    void onAddTransitionAction();
+    void onDeleteAction();
+    void onMarkUpdateAction();
+    void onNameChangeAction();
+
+
+
+
+
+
 private:
 
     QString mAnimName;
     bool mIsEnterState; //Whether the state is the enter state
 
-    QMenu *mContextMenu; //The context menu to use when the state is right clicked
-
-
-
     QList<GraphicsTransition *> mTransitions;
+
+
+
+    //Context Menu
+    QMenu *mContextMenu;
+    QAction *mAddTransitionAction;
+    QAction *mMarkEnterAction;
+    QAction *mUnmarkEnterAction;
+    QAction *mDeleteAction;
+
+
+
+
 
 
 

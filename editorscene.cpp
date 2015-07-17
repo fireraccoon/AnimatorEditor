@@ -18,17 +18,35 @@ void EditorScene::setMode(EditorScene::Mode mode){
     mMode = mode;
 }
 
+void EditorScene::selectItem(QGraphicsItem *item){
+    emit itemSelected(item);
+}
+
+void EditorScene::deleteItem(GraphicsStateItem *state){
+    this->removeItem(state);
+}
+
+
+
 void EditorScene::addState(QPointF pos){
 
+    GraphicsStateItem *state = new GraphicsStateItem(pos.x(),pos.y());
 
-    QMenu menu =
-    GraphicsStateItem *item = new GraphicsStateItem(pos.x(),pos.y(), menu);
-    addItem(item);
+
+    //Connect
+    connect(state, SIGNAL(itemSelected(QGraphicsItem*)), this, SLOT(selectItem(QGraphicsItem*)));
+    connect(state, SIGNAL(deleteRequest(GraphicsStateItem*)), this, SLOT(deleteItem(GraphicsStateItem*)));
+
+
+    addItem(state);
+
+    emit stateInserted(state);
 }
 
 
 void EditorScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
      QGraphicsScene::mousePressEvent(event);
+
 }
 
 void EditorScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event){

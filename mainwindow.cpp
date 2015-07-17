@@ -36,6 +36,11 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
+void MainWindow::sceneScaleChanged(const QString &scale)
+{
+
+}
+
 
 void MainWindow::on_actionExit_triggered(){
     exitApp();
@@ -75,28 +80,6 @@ void MainWindow::on_btnAddParameter_clicked(){
 
 
 
-void MainWindow::deleteSelectedItem(){
-
-}
-
-
-
-
-
-void MainWindow::stateInserted(GraphicsStateItem *item)
-{
-
-}
-
-void MainWindow::sceneScaleChanged(const QString &scale)
-{
-
-}
-
-void MainWindow::itemSelected(QGraphicsItem *item)
-{
-
-}
 
 
 

@@ -28,19 +28,17 @@ public:
     EditorScene(QObject *parent);
 
 
-    /**
-     * @brief addState
-     * Adds a new Visual StateItem
-     * @param pos
-     */
+    ///
+    /// \brief Adds a new Visual StateItem at a given position
+    /// \param pos
+    ///
     void addState(QPointF pos);
 
 
-    /**
-     * Displays the animator on the scene
-     * @brief displayAnimator
-     * @param animator
-     */
+    ///
+    /// \brief Displays the animator on the scene
+    /// \param animator
+    ///
     void displayAnimator(Animator &animator);
 
 
@@ -48,10 +46,55 @@ public:
 public slots:
     void setMode(Mode mode); //Changes the mode
 
+
+    void selectItem(QGraphicsItem *item);
+
+
+
+    void deleteItem(GraphicsStateItem *state);
+
+
+
+
+
 signals:
-    void stateInserted(GraphicsStateItem *state);    // Triggered when a state is added to the scene
-    //void transitionInserted(Transition)
+    ///
+    /// \brief  Triggered when a state is added to the scene
+    /// \param state
+    ///
+    void stateInserted(GraphicsStateItem *state);
+
+    ///
+    /// \brief Triggered when a state is deleted from the scene
+    /// \param state
+    ///
+    void stateDeleted(GraphicsStateItem *state);
+
+    ///
+    /// \briefTriggered when the id of a text is changed
+    /// \param state
+    ///
+    void stateUpdated(GraphicsStateItem *state);
+
+
+    ///
+    /// \brief Triggered when transition is inserted
+    /// \param transition
+    ///
+    void transitionInserted(GraphicsTransition *transition);
+
+    ///
+    /// \brief Triggered when transition is deleted
+    /// \param transition
+    ///
+    void transitionDeleted(GraphicsTransition *transition);
+
+    ///
+    /// \brief Triggered when an Item is selected
+    /// \param item
+    ///
     void itemSelected(QGraphicsItem *item);  // Triggered when an Item is selected on the scene
+
 
 
 
@@ -62,6 +105,11 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
+
+
+
+
 
 
 

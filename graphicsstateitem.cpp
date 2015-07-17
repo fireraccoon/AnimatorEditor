@@ -7,11 +7,10 @@
 #include <QGraphicsScene>
 
 
-GraphicsStateItem::GraphicsStateItem(int x, int y, QMenu *contextMenu, bool isEnterState, QGraphicsItem *parent)
+GraphicsStateItem::GraphicsStateItem(int x, int y, bool isEnterState, QGraphicsItem *parent)
     : QGraphicsTextItem(parent){
 
     mIsEnterState = isEnterState;
-    mContextMenu = contextMenu;
 
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -22,7 +21,64 @@ GraphicsStateItem::GraphicsStateItem(int x, int y, QMenu *contextMenu, bool isEn
     setPlainText("New State");
 
     setDefaultTextColor(Qt::white);
+
+
+    createContextMenu();
 }
+
+
+
+void GraphicsStateItem::createContextMenu()
+{
+    mContextMenu = new QMenu();
+
+    mAddTransitionAction = new QAction(tr("Add transition"), this);
+    mContextMenu->addAction(mAddTransitionAction);
+    connect(mAddTransitionAction, SIGNAL(triggered(bool)), this, SLOT(onAddTransitionAction()));
+
+    mMarkEnterAction = new QAction(tr("Mark as enter state"), this);
+    mContextMenu->addAction(mMarkEnterAction);
+    connect(mMarkEnterAction, SIGNAL(triggered(bool)), this, SLOT(onMarkUpdateAction()));
+
+
+    mUnmarkEnterAction = new QAction(tr("Unmark as enter state"), this);
+    mContextMenu->addAction(mUnmarkEnterAction);
+    connect(mUnmarkEnterAction, SIGNAL(triggered(bool)), this, SLOT(onMarkUpdateAction()));
+
+
+
+    mDeleteAction = new QAction(tr("Delete"), this);
+    mContextMenu->addAction(mDeleteAction);
+    connect(mDeleteAction, SIGNAL(triggered(bool)), this, SLOT(onDeleteAction()));
+
+}
+
+
+
+void GraphicsStateItem::onAddTransitionAction(){
+    //emit transitionInserted(this);
+}
+
+
+void GraphicsStateItem::onDeleteAction(){
+    emit deleteRequest(this);
+}
+
+void GraphicsStateItem::onMarkUpdateAction(){
+
+
+    //emit SINGAL()
+    stateMarked(this, !mIsEnterState); //The opposite of the current state
+
+
+}
+
+void GraphicsStateItem::onNameChangeAction(){
+    //emit
+}
+
+
+
 
 void GraphicsStateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
 
@@ -84,7 +140,7 @@ void GraphicsStateItem::writeXml(QXmlStreamWriter &writer){
     writer.writeAttribute("animName", mAnimName);
 
     // TODO isEnter State
-    //writer.writeAttribute("isStart", m);
+    writer.writeAttribute("isEnter", QString::number(mIsEnterState));
 
 
     writer.writeStartElement("transitions");
@@ -112,6 +168,8 @@ void GraphicsStateItem::writeXml(QXmlStreamWriter &writer){
 
 void GraphicsStateItem::mousePressEvent(QGraphicsSceneMouseEvent *event){
     QGraphicsTextItem::mousePressEvent(event);
+    setSelected(true);
+    emit itemSelected(this);
 
 }
 
@@ -133,9 +191,13 @@ void GraphicsStateItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event){
 void GraphicsStateItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event){
 
 
+    mMarkEnterAction->setEnabled(!mIsEnterState);
+    mUnmarkEnterAction->setEnabled(mIsEnterState);
+
     this->scene()->clearSelection();
     setSelected(true);
     mContextMenu->exec(event->screenPos());
+
 }
 
 
@@ -169,4 +231,5 @@ void GraphicsStateItem::keyPressEvent(QKeyEvent *event){
     }
     QGraphicsTextItem::keyPressEvent(event);
 }
+
 

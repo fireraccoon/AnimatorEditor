@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
 
     //MACHINE
-    Animator anim;
+    /*Animator anim;
 
     anim.addParameter("speed", Parameter(ParameterType::Integer));
     anim.addParameter("isGrounded", Parameter(ParameterType::Boolean));
@@ -22,13 +22,7 @@ int main(int argc, char *argv[])
     anim.addState(running);
 
 
-
-
-
-
-
-
-    anim.saveToXml("../Choko.xml");
+    anim.saveToXml("../Choko.xml");*/
 
 
     QApplication a(argc, argv);

@@ -37,3 +37,8 @@ void GraphicsTransition::writeXml(QXmlStreamWriter &writer){
     writer.writeEndElement();
 }
 
+void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+
+}
+
