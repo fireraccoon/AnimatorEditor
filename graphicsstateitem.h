@@ -27,7 +27,6 @@ public:
 
     QRectF getBoundingRect() const;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 
 
@@ -111,6 +110,7 @@ protected:
 
     void keyPressEvent(QKeyEvent *event);
 
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 
 private slots:

@@ -3,8 +3,11 @@
 
 #include <math.h>
 
-const double Pi = 3.141592;
 
+#include <QPen>
+#include <QPainter>
+
+const qreal PI = 3.14;
 
 GraphicsTransition::GraphicsTransition(GraphicsStateItem *from, GraphicsStateItem *to, QGraphicsItem *parent)
     : QGraphicsLineItem(parent){
@@ -80,7 +83,6 @@ void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem
     painter->setBrush(Qt::white);
 
 
-
     QLineF centerLine(mCurrentState->getCenterPoint(), mNextState->getCenterPoint());
     QPolygonF endPolygon = mNextState->boundingRect();
     QPointF p1 = endPolygon.first() + mNextState->getCenterPoint();
@@ -101,12 +103,12 @@ void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     double angle = ::acos(line().dx() / line().length());
     if (line().dy() >= 0){
-        angle = (Pi * 2) - angle;
+        angle = (PI * 2) - angle;
 
-        QPointF arrowP1 = line().p1() + QPointF(sin(angle + Pi / 3) * arrowSize,
-                                        cos(angle + Pi / 3) * arrowSize);
-        QPointF arrowP2 = line().p1() + QPointF(sin(angle + Pi - Pi / 3) * arrowSize,
-                                        cos(angle + Pi - Pi / 3) * arrowSize);
+        QPointF arrowP1 = line().p1() + QPointF(sin(angle + PI / 3) * arrowSize,
+                                        cos(angle + PI / 3) * arrowSize);
+        QPointF arrowP2 = line().p1() + QPointF(sin(angle + PI - PI / 3) * arrowSize,
+                                        cos(angle + PI - PI / 3) * arrowSize);
 
         mArrowHead.clear();
         mArrowHead << line().p1() << arrowP1 << arrowP2;
@@ -117,16 +119,15 @@ void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem
         if (isSelected()) {
             painter->setPen(QPen(Qt::white, 1, Qt::DashLine));
         QLineF myLine = line();
-        myLine.translate(0, 4.0);
+        myLine.translate(0, 2.0);
         painter->drawLine(myLine);
-        myLine.translate(0,-8.0);
+        myLine.translate(0,-4.0);
         painter->drawLine(myLine);
         }
     }
 
     QGraphicsLineItem::paint(painter, option, widget);
 
-    update();
 
 }
 
