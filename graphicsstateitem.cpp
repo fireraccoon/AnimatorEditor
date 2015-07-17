@@ -56,7 +56,7 @@ void GraphicsStateItem::createContextMenu()
 
 
 void GraphicsStateItem::onAddTransitionAction(){
-    //emit transitionInserted(this);
+    emit transitionInsertionRequest(this);
 }
 
 

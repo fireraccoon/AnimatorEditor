@@ -1,5 +1,11 @@
 #include "graphicstransition.h"
 
+
+#include <math.h>
+
+const double Pi = 3.141592;
+
+
 GraphicsTransition::GraphicsTransition(GraphicsStateItem *from, GraphicsStateItem *to, QGraphicsItem *parent)
     : QGraphicsLineItem(parent){
 
@@ -8,6 +14,21 @@ GraphicsTransition::GraphicsTransition(GraphicsStateItem *from, GraphicsStateIte
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(Qt::white, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 
+}
+
+QRectF GraphicsTransition::boundingRect(){
+    qreal extra = (pen().width() + 20) / 2.0;
+
+        return QRectF(line().p1(), QSizeF(line().p2().x() - line().p1().x(),
+                                          line().p2().y() - line().p1().y()))
+            .normalized()
+                .adjusted(-extra, -extra, extra, extra);
+}
+
+QPainterPath GraphicsTransition::shape(){
+    QPainterPath path = QGraphicsLineItem::shape();
+    path.addPolygon(mArrowHead);
+    return path;
 }
 
 
@@ -21,6 +42,16 @@ void GraphicsTransition::setCurrentState(GraphicsStateItem *state){
     mCurrentState = state;
 
 }
+
+void GraphicsTransition::updatePosition(){
+
+    if(mCurrentState != nullptr && mNextState != nullptr){
+        QLineF line(mapFromItem(mCurrentState, 20, 0), mapFromItem(mNextState, 0, 0));
+        setLine(line);
+    }
+}
+
+
 
 void GraphicsTransition::writeXml(QXmlStreamWriter &writer){
 
@@ -37,8 +68,65 @@ void GraphicsTransition::writeXml(QXmlStreamWriter &writer){
     writer.writeEndElement();
 }
 
-void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
+void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+
+    if (mCurrentState->collidesWithItem(mNextState))
+       return;
+
+    QPen myPen = pen();
+    myPen.setColor(Qt::white);
+    qreal arrowSize = 20;
+    painter->setPen(myPen);
+    painter->setBrush(Qt::white);
+
+
+
+    QLineF centerLine(mCurrentState->getCenterPoint(), mNextState->getCenterPoint());
+    QPolygonF endPolygon = mNextState->boundingRect();
+    QPointF p1 = endPolygon.first() + mNextState->getCenterPoint();
+    QPointF p2;
+    QPointF intersectPoint;
+    QLineF polyLine;
+    for (int i = 1; i < endPolygon.count(); ++i) {
+    p2 = endPolygon.at(i) + mNextState->getCenterPoint();
+    polyLine = QLineF(p1, p2);
+    QLineF::IntersectType intersectType =
+        polyLine.intersect(centerLine, &intersectPoint);
+    if (intersectType == QLineF::BoundedIntersection)
+        break;
+        p1 = p2;
+    }
+
+    setLine(QLineF(intersectPoint, mCurrentState->getCenterPoint()));
+
+    double angle = ::acos(line().dx() / line().length());
+    if (line().dy() >= 0){
+        angle = (Pi * 2) - angle;
+
+        QPointF arrowP1 = line().p1() + QPointF(sin(angle + Pi / 3) * arrowSize,
+                                        cos(angle + Pi / 3) * arrowSize);
+        QPointF arrowP2 = line().p1() + QPointF(sin(angle + Pi - Pi / 3) * arrowSize,
+                                        cos(angle + Pi - Pi / 3) * arrowSize);
+
+        mArrowHead.clear();
+        mArrowHead << line().p1() << arrowP1 << arrowP2;
+
+
+        painter->drawLine(line());
+        painter->drawPolygon(mArrowHead);
+        if (isSelected()) {
+            painter->setPen(QPen(Qt::white, 1, Qt::DashLine));
+        QLineF myLine = line();
+        myLine.translate(0, 4.0);
+        painter->drawLine(myLine);
+        myLine.translate(0,-8.0);
+        painter->drawLine(myLine);
+        }
+    }
+
+    QGraphicsLineItem::paint(painter, option, widget);
+
+    update();
 
 }
 

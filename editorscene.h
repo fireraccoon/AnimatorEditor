@@ -54,6 +54,7 @@ public slots:
     void deleteItem(GraphicsStateItem *state);
 
 
+    void onTransitionInsertion(GraphicsStateItem *state);
 
 
 
@@ -120,6 +121,9 @@ private:
 
 
     Mode mMode;   // The current mode of the editor
+
+    QGraphicsLineItem *mLine;   //Temporary transition
+
 
 
 

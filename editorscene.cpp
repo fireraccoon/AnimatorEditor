@@ -26,6 +26,19 @@ void EditorScene::deleteItem(GraphicsStateItem *state){
     this->removeItem(state);
 }
 
+void EditorScene::onTransitionInsertion(GraphicsStateItem *state){
+    mMode = InsertTransition;
+
+   QPointF pos = state->scenePos();
+   pos.setX(pos.x() + state->boundingRect().width()/2);
+   pos.setY(pos.y() + state->boundingRect().height()/2);
+
+    mLine = new QGraphicsLineItem(QLineF(pos,pos));
+    mLine->setPen(QPen(Qt::white, 2));
+    addItem(mLine);
+
+}
+
 
 
 void EditorScene::addState(QPointF pos){
@@ -36,7 +49,7 @@ void EditorScene::addState(QPointF pos){
     //Connect
     connect(state, SIGNAL(itemSelected(QGraphicsItem*)), this, SLOT(selectItem(QGraphicsItem*)));
     connect(state, SIGNAL(deleteRequest(GraphicsStateItem*)), this, SLOT(deleteItem(GraphicsStateItem*)));
-
+    connect(state, SIGNAL(transitionInsertionRequest(GraphicsStateItem*)), this, SLOT(onTransitionInsertion(GraphicsStateItem*)));
 
     addItem(state);
 
@@ -52,21 +65,55 @@ void EditorScene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 void EditorScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
 
     //If we are in the add transition mode the transition follows the mouse
-    if(mMode == Mode::InsertTransition){
-        //QLineF newLine(line->line().p1(), event->scenePos());
-        //line->setLine(newLine);
-    }else if(mMode == Mode::MoveState){
+    if(mMode == InsertTransition){
+        QLineF newLine(mLine->line().p1(), event->scenePos());
+        mLine->setLine(newLine);
+        mLine->setZValue(-1000);
+    }else if(mMode == MoveState){
         QGraphicsScene::mouseMoveEvent(event);
     }
-
-
-
-
-
 }
+
 
 void EditorScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
     QGraphicsScene::mouseReleaseEvent(event);
+
+    if(mMode == InsertTransition){
+        QList<QGraphicsItem *> startItems = items(mLine->line().p1());
+        if (startItems.count() && startItems.first() == mLine)
+            startItems.removeFirst();
+        QList<QGraphicsItem *> endItems = items(mLine->line().p2());
+        if (endItems.count() && endItems.first() == mLine)
+            endItems.removeFirst();
+
+        //removeItem(mLine);
+        //delete mLine;
+
+        if (startItems.count() > 0 && endItems.count() > 0 &&
+            /*startItems.first()->type() == DiagramItem::Type &&
+            endItems.first()->type() == DiagramItem::Type &&*/
+            startItems.first() != endItems.first()) {
+
+            GraphicsStateItem *startItem = qgraphicsitem_cast<GraphicsStateItem *>(startItems.first());
+            GraphicsStateItem *endItem = qgraphicsitem_cast<GraphicsStateItem *>(endItems.first());
+            GraphicsTransition *transition = new GraphicsTransition(startItem, endItem);
+            startItem->addTransition(transition);
+            transition->setZValue(-1000.0);
+            addItem(transition);
+            transition->updatePosition();
+
+
+            removeItem(mLine);
+            mLine = nullptr;
+
+            setMode(MoveState);
+
+        }
+
+
+    }
+
+    QGraphicsScene::mouseMoveEvent(event);
 
 }
 
@@ -83,14 +130,8 @@ void EditorScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event){
                 if(a->text() == addStateStr){
                     addState(event->scenePos());
                 }
-
             }
         }
-
-
-
-
-
 
 }
 

@@ -37,6 +37,12 @@ public:
 
 
 
+    QPointF getCenterPoint(){
+        QPointF pos = this->scenePos();
+        pos.setX(pos.x() + boundingRect().width()/2);
+        pos.setY(pos.y() + boundingRect().height()/2);
+        return pos;
+    }
 
 
 

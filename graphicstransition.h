@@ -30,8 +30,6 @@ public:
     Condition* getCondition(){ return mCondition; }
 
 
-
-
     void updatePosition();
 
     void writeXml(QXmlStreamWriter &writer);

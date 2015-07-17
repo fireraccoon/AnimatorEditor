@@ -13,3 +13,13 @@ SCENE catches signal "stateSelected"
 SCENE emits signal "stateSelected"
 INSPECTOR catches "stateSelected"
 INSPECTOR inspects STATE
+
+
+
+
+
+
+user clicks "add transition" on STATE
+STATE Emits "transitionInsertionRequest"
+SCENE catches signal "transitionInsertionRequest"
+SCENE set mode to "InsertTransition"
