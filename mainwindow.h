@@ -47,7 +47,7 @@ private slots:
     void on_btnAddParameter_clicked();
 
 
-
+    void onItemSelected(QGraphicsItem* item);
 
 
 private:

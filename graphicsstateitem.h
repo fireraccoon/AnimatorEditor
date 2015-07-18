@@ -25,7 +25,7 @@ Q_OBJECT
 public:
     GraphicsStateItem(int x, int y, bool isEnterState = false, QGraphicsItem *parent=0);
 
-    QRectF getBoundingRect() const;
+
 
 
 
@@ -33,6 +33,7 @@ public:
     void addTransition(GraphicsTransition *tran);
     void removeTransition(GraphicsTransition *tran);
     void removeTransitions();
+
 
 
 
@@ -57,6 +58,14 @@ public:
         mAnimName = animName;
     }
 
+
+
+    bool isEnterState(){
+        return mIsEnterState;
+    }
+
+
+    bool isOrphan();
 
     void writeXml(QXmlStreamWriter &writer);
 
@@ -93,6 +102,7 @@ signals:
 
 
 
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -111,6 +121,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
 
 
 private slots:

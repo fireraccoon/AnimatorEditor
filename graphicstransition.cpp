@@ -20,7 +20,8 @@ GraphicsTransition::GraphicsTransition(GraphicsStateItem *from, GraphicsStateIte
 }
 
 QRectF GraphicsTransition::boundingRect(){
-    qreal extra = (pen().width() + 20) / 2.0;
+    prepareGeometryChange();
+    qreal extra = (pen().width() + 60) / 2.0;
 
         return QRectF(line().p1(), QSizeF(line().p2().x() - line().p1().x(),
                                           line().p2().y() - line().p1().y()))
@@ -51,6 +52,7 @@ void GraphicsTransition::updatePosition(){
     if(mCurrentState != nullptr && mNextState != nullptr){
         QLineF line(mapFromItem(mCurrentState, 20, 0), mapFromItem(mNextState, 0, 0));
         setLine(line);
+
     }
 }
 
@@ -77,6 +79,7 @@ void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem
     if (mCurrentState->collidesWithItem(mNextState))
        return;
 
+
     QPen myPen = pen();
     myPen.setColor(Qt::white);
     qreal arrowSize = 20;
@@ -91,13 +94,13 @@ void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem
     QPointF intersectPoint;
     QLineF polyLine;
     for (int i = 1; i < endPolygon.count(); ++i) {
-    p2 = endPolygon.at(i) + mNextState->pos();
-    polyLine = QLineF(p1, p2);
-    QLineF::IntersectType intersectType =
-        polyLine.intersect(centerLine, &intersectPoint);
-    if (intersectType == QLineF::BoundedIntersection)
-        break;
+        p2 = endPolygon.at(i) + mNextState->pos();
+        polyLine = QLineF(p1, p2);
+        QLineF::IntersectType intersectType = polyLine.intersect(centerLine, &intersectPoint);
+        if (intersectType == QLineF::BoundedIntersection)
+            break;
         p1 = p2;
+
     }
 
     setLine(QLineF(intersectPoint, mCurrentState->getCenterPoint()));
@@ -116,18 +119,23 @@ void GraphicsTransition::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
 
     painter->drawLine(line());
+
+
     painter->drawPolygon(mArrowHead);
+    //painter->drawEllipse(line().p1(), 10,10);
+
+    //Selection square
     if (isSelected()) {
-        painter->setPen(QPen(Qt::white, 1, Qt::DashLine));
+        painter->setPen(QPen(Qt::yellow, 3, Qt::DashLine));
         QLineF myLine = line();
-        myLine.translate(0, 2.0);
+        myLine.translate(0, 4.0);
         painter->drawLine(myLine);
-        myLine.translate(0,-4.0);
+        myLine.translate(0,-8.0);
         painter->drawLine(myLine);
+
     }
 
 
-    QGraphicsLineItem::paint(painter, option, widget);
 
 
 }

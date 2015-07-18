@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     parameter.cpp \
     condition.cpp \
     graphicstransition.cpp \
-    graphicsstateitem.cpp
+    graphicsstateitem.cpp \
+    stateinspector.cpp
 
 HEADERS  += mainwindow.h \
     editorscene.h \
@@ -29,13 +30,15 @@ HEADERS  += mainwindow.h \
     parameter.h \
     condition.h \
     graphicstransition.h \
-    graphicsstateitem.h
+    graphicsstateitem.h \
+    stateinspector.h
 
 RESOURCES = qdarkstyle/style.qrc \
     res/res.qrc
 
 FORMS    += mainwindow.ui \
-    newparameterdialog.ui
+    newparameterdialog.ui \
+    stateinspector.ui
 
 
 

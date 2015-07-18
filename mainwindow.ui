@@ -86,9 +86,16 @@
        </layout>
       </widget>
       <widget class="QGroupBox" name="groupBoxInspector">
+       <property name="minimumSize">
+        <size>
+         <width>225</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="title">
         <string>Inspector</string>
        </property>
+       <layout class="QVBoxLayout" name="inspectorLayout"/>
       </widget>
      </widget>
     </item>

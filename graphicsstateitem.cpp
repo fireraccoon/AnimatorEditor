@@ -104,6 +104,8 @@ void GraphicsStateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 
 }
 
+
+
 void GraphicsStateItem::addTransition(GraphicsTransition *tran){
 
     mTransitions.append(tran);
@@ -126,6 +128,11 @@ void GraphicsStateItem::removeTransitions(){
         scene()->removeItem(tran);
         delete tran;
     }
+}
+
+bool GraphicsStateItem::isOrphan()
+{
+    return this->mTransitions.size() == 0;
 }
 
 

@@ -3,6 +3,8 @@
 
 #include "ui_newparameterdialog.h"
 
+
+
 class NewParamDialog : public QDialog, Ui::Dialog{
     Q_OBJECT
 public:

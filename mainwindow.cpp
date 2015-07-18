@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "newparamdialog.h"
+#include "stateinspector.h"
 
 #include <QTextStream>
 
@@ -62,13 +63,46 @@ void MainWindow::setupEditor(){
     scene = new EditorScene(this);
     scene->setSceneRect(QRectF(-5000, -500, 500, 500));
     ui->graphicsView->setScene(scene);
-    ui->graphicsView->setRenderHints( QPainter::Antialiasing );
+    ui->graphicsView->setRenderHints(QPainter::Antialiasing);
+
+    connect(scene,SIGNAL(itemSelected(QGraphicsItem*)), this, SLOT(onItemSelected(QGraphicsItem*)));
+
+
 }
 
 void MainWindow::on_btnAddParameter_clicked(){
 
     NewParamDialog *d = new NewParamDialog(this);
     d->exec();
+
+
+}
+
+void MainWindow::onItemSelected(QGraphicsItem *item){
+    qDebug("YES");
+
+    GraphicsStateItem *state = qgraphicsitem_cast<GraphicsStateItem*>(item);
+    if(state != NULL){
+        //Remove old child widgets
+        QLayoutItem *child;
+        child = ui->inspectorLayout->takeAt(0);
+        while(child != NULL)
+        {
+            ui->verticalLayout->removeWidget(child->widget());
+            delete child;
+            child = ui->verticalLayout->takeAt(0);
+        }
+
+        StateInspector *ins = new StateInspector(state, this->ui->groupBoxInspector);
+
+        ui->inspectorLayout->addWidget(ins);
+
+    }else{
+        GraphicsTransition *transition = qgraphicsitem_cast<GraphicsTransition*>(item);
+        if(transition != NULL){
+
+        }
+    }
 
 
 }
