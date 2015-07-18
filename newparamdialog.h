@@ -9,7 +9,7 @@ class NewParamDialog : public QDialog, Ui::Dialog{
     Q_OBJECT
 public:
     NewParamDialog(QWidget *parent = 0);
-
+    ~NewParamDialog();
 
 
 

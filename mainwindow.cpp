@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "newanimatordialog.h"
 #include "newparamdialog.h"
+#include "spriteranimationreader.h"
 #include "stateinspector.h"
 
 #include <QTextStream>
@@ -61,7 +63,7 @@ void MainWindow::exitApp(){
 
 void MainWindow::setupEditor(){
     scene = new EditorScene(this);
-    scene->setSceneRect(QRectF(-5000, -500, 500, 500));
+    scene->setSceneRect(QRectF(0, 0, 500, 500));
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHints(QPainter::Antialiasing);
 
@@ -73,13 +75,27 @@ void MainWindow::setupEditor(){
 void MainWindow::on_btnAddParameter_clicked(){
 
     NewParamDialog *d = new NewParamDialog(this);
-    d->exec();
+    int result = d->exec();
+
+    if(result == QDialog::Accepted){
+
+        /*QString source = d->;
+        QString output = "";*/
+
+    }
+
+
+
+
+
+    delete(d);
 
 
 }
 
+
 void MainWindow::onItemSelected(QGraphicsItem *item){
-    qDebug("YES");
+
 
     GraphicsStateItem *state = qgraphicsitem_cast<GraphicsStateItem*>(item);
     if(state != NULL){
@@ -108,27 +124,46 @@ void MainWindow::onItemSelected(QGraphicsItem *item){
 }
 
 
+void MainWindow::on_actionNew_Animator_Machine_triggered(){
+
+    NewAnimatorDialog *d = new NewAnimatorDialog(this);
+    int result = d->exec();
+
+    if(result == QDialog::Accepted){
+        QString source = d->getSource();
+        QString output = d->getOutput();
+
+
+
+        //Read Source File
+        SpriterAnimationReader reader(source);
+        QStringList states = reader.read();
+
+
+         //Create States
+        for(int i=0; i<states.count(); i++){
+            QString stateName = states.at(i);
+
+            GraphicsStateItem *state = new GraphicsStateItem(-4774,-437);
+            state->setId(stateName);
+            state->setAnimName(stateName);
+
+            scene->addState(state);
+
+        }
+
+        //ANY_STATE
+        GraphicsStateItem *anyState = new GraphicsStateItem(-4774, -437);
+        anyState->setId("ANY_STATE");
+        scene->addState(anyState);
+
+        //Spread all the states evenly accros the scene
+        scene->spreadStates();
 
 
 
 
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    delete(d);
+}

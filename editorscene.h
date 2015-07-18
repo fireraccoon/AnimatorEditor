@@ -29,17 +29,30 @@ public:
 
 
     ///
-    /// \brief Adds a new Visual StateItem at a given position
+    /// \brief Creates a new Visual StateItem at a given position
     /// \param pos
     ///
-    void addState(QPointF pos);
+    void createState(QPointF pos);
 
+
+    void addState(GraphicsStateItem *state);
 
     ///
     /// \brief Displays the animator on the scene
     /// \param animator
     ///
     void displayAnimator(Animator &animator);
+
+
+    ///
+    /// \brief Spreads all the states accross the scene
+    ///
+    void spreadStates();
+
+    ///
+    /// \brief clears the scene
+    ///
+    void clear();
 
 
 
@@ -55,6 +68,8 @@ public slots:
 
 
     void onTransitionInsertion(GraphicsStateItem *state);
+
+
 
 
 

@@ -50,11 +50,16 @@ public:
         return this->toPlainText();
     }
 
+
+    void setId(const QString id){
+        setPlainText(id);
+    }
+
     QString getAnimName(){
         return mAnimName;
     }
 
-    QString setAnimName(QString animName){
+    void setAnimName(const QString animName){
         mAnimName = animName;
     }
 

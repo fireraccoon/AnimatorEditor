@@ -96,10 +96,20 @@ void GraphicsStateItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
     else
         painter->setBrush(QColor(0, 0, 0, 0x80));
 
+    if(toPlainText() == "EXIT"){
+        painter->setBrush(QColor(231, 76, 60, 255));
+    }else if(toPlainText() == "ANY_STATE"){
+        painter->setBrush(QColor(230, 126, 34, 125));
+    }
+
+
+
     int margin = 10;
     //painter->drawRect(option->rect.marginsAdded(QMargins(margin, margin, margin, margin)));
     painter->drawRect(option->rect);
     QGraphicsTextItem::paint(painter, option, widget);
+
+
 
 
 }

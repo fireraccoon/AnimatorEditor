@@ -3,6 +3,7 @@
 #include <QMenu>
 #include <QSignalMapper>
 #include <QDebug>
+#include <QGraphicsView>
 
 EditorScene::EditorScene(QObject *parent)
     : QGraphicsScene(parent){
@@ -41,10 +42,15 @@ void EditorScene::onTransitionInsertion(GraphicsStateItem *state){
 
 
 
-void EditorScene::addState(QPointF pos){
+void EditorScene::createState(QPointF pos){
+    qDebug() << pos;
+
 
     GraphicsStateItem *state = new GraphicsStateItem(pos.x(),pos.y());
+    addState(state);
+}
 
+void EditorScene::addState(GraphicsStateItem *state){
 
     //Connect
     connect(state, SIGNAL(itemSelected(QGraphicsItem*)), this, SLOT(selectItem(QGraphicsItem*)));
@@ -52,8 +58,43 @@ void EditorScene::addState(QPointF pos){
     connect(state, SIGNAL(transitionInsertionRequest(GraphicsStateItem*)), this, SLOT(onTransitionInsertion(GraphicsStateItem*)));
 
     addItem(state);
-
     emit stateInserted(state);
+}
+
+void EditorScene::spreadStates()
+{
+
+    QGraphicsView *view = views().first();
+
+
+
+    QRect viewportRect(0, 0, view->viewport()->width(), view->viewport()->height());
+    QRectF visibleRect = view->mapToScene(viewportRect).boundingRect();
+
+
+
+
+    int itemCount = items().count();
+
+    for(int i =0; i<itemCount; i++){
+        QGraphicsItem *item = items().at(i);
+
+        while(item->collidingItems().count()){
+
+            qreal randX = qrand() % (int)visibleRect.width();
+            qreal randY = qrand() % (int)visibleRect.height();
+
+            item->setPos(randX, randY);
+
+        }
+    }
+
+}
+
+void EditorScene::clear(){
+
+
+
 }
 
 
@@ -128,7 +169,7 @@ void EditorScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *event){
             QAction *a = menu.exec(event->screenPos());
             if(a != NULL){
                 if(a->text() == addStateStr){
-                    addState(event->scenePos());
+                    createState(event->scenePos());
                 }
             }
         }

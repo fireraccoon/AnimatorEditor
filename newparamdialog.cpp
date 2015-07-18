@@ -10,3 +10,8 @@ NewParamDialog::NewParamDialog(QWidget *parent) : QDialog(parent){
 
 }
 
+NewParamDialog::~NewParamDialog()
+{
+    delete ui;
+}
+

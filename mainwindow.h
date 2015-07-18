@@ -50,6 +50,8 @@ private slots:
     void onItemSelected(QGraphicsItem* item);
 
 
+    void on_actionNew_Animator_Machine_triggered();
+
 private:
     ///
     /// \brief Exits the application
